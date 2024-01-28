@@ -1,7 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body{
     background-color: black;
+    color: white;
+    font-family: 'Manrope', sans-serif;
 }
+
+
+.animate-slide-up {
+    animation: slideUp 2.0s ease-out;
+  }
+
+  @keyframes slideUp {
+    0% {
+      transform: translateY(2rem);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+.animate-modal-up {
+    animation: slideUp 0.5s ease-out;
+  }
+
+  @keyframes slideUp {
+    0% {
+      transform: translateY(2rem);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .animate-background-shine {
+    animation: background-shine 3s linear infinite;
+  }
+
+  @keyframes background-shine {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+  

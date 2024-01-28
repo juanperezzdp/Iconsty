@@ -1,11 +1,9 @@
 import { useRef, useState } from "react";
 import Ai from "../Import/Ai";
+import StyleIconsModal from "./StyleIconsModal";
 
 const CardIcons = () => {
-  const iconRefs = Object.keys(Ai).reduce((acc, iconName) => {
-    acc[iconName] = useRef(null);
-    return acc;
-  }, {});
+  const [selectedIcon, setSelectedIcon] = useState(null);
 
   const [iconStates, setIconStates] = useState(
     Object.keys(Ai).reduce((acc, iconName) => {
@@ -17,6 +15,11 @@ const CardIcons = () => {
       return acc;
     }, {})
   );
+
+  const iconRefs = Object.keys(Ai).reduce((acc, iconName) => {
+    acc[iconName] = useRef(null);
+    return acc;
+  }, {});
 
   const handleMouseMove = (e, iconName) => {
     if (!iconRefs[iconName].current || iconStates[iconName].isFocused) return;
@@ -60,21 +63,16 @@ const CardIcons = () => {
   };
 
   const handleIconClick = (iconName) => {
-    const svgElement = iconRefs[iconName].current.querySelector("svg");
+    setSelectedIcon(Ai[iconName]);
+    useIconStore.setState({ selectedIcon: Ai[iconName] });
+  };
 
-    if (svgElement) {
-      const svgString = new XMLSerializer().serializeToString(svgElement);
-
-      // Copiar el string SVG al portapapeles
-      navigator.clipboard.writeText(svgString).then(() => {
-        // Aquí puedes agregar lógica adicional después de copiar
-        alert(`Icono ${iconName} copiado al portapapeles.`);
-      });
-    }
+  const handleCloseModal = () => {
+    setSelectedIcon(null);
   };
 
   return (
-    <div className="w-full flex flex-wrap gap-4">
+    <div className="w-full flex flex-wrap justify-center gap-4">
       {Object.keys(Ai).map((iconName) => {
         const Icon = Ai[iconName];
         return (
@@ -87,7 +85,7 @@ const CardIcons = () => {
             onBlur={() => handleBlur(iconName)}
             onMouseEnter={() => handleMouseEnter(iconName)}
             onMouseLeave={() => handleMouseLeave(iconName)}
-            className=" cursor-pointer relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-xl border-2 hover:border-blue-950  border-slate-800  bg-gradient-to-r from-black to-[#05011e] shadow-2xl"
+            className=" cursor-pointer relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-xl border-2 hover:border-blue-900  border-zinc-900  bg-gradient-to-r from-black to-[#05011e] shadow-2xl"
           >
             <div
               className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
@@ -97,12 +95,15 @@ const CardIcons = () => {
               }}
             />
             <div className=" z-10 flex flex-col justify-center items-center gap-3">
-              <Icon className="text-white text-4xl animate-bounce animate-infinite" />
+              <Icon className="text-white text-4xl" />
               <p className="text-xs text-slate-200">{iconName}</p>
             </div>
           </div>
         );
       })}
+      {selectedIcon && (
+        <StyleIconsModal icon={selectedIcon} onClose={handleCloseModal} />
+      )}
     </div>
   );
 };

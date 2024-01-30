@@ -1,9 +1,10 @@
 import { useRef, useState } from "react";
 import Ai from "../Import/Ai";
-import StyleIconsModal from "./StyleIconsModal";
+import useIconStore from "../state";
 
 const CardIcons = () => {
-  const [selectedIcon, setSelectedIcon] = useState(null);
+  const getSelectedIcon = useIconStore((state) => state.setSelectedIcon);
+  const { booleanValue, setBooleanValue } = useIconStore();
 
   const [iconStates, setIconStates] = useState(
     Object.keys(Ai).reduce((acc, iconName) => {
@@ -63,29 +64,31 @@ const CardIcons = () => {
   };
 
   const handleIconClick = (iconName) => {
-    setSelectedIcon(Ai[iconName]);
-    useIconStore.setState({ selectedIcon: Ai[iconName] });
+    getSelectedIcon(Ai[iconName]);
   };
 
   const handleCloseModal = () => {
-    setSelectedIcon(null);
+    setBooleanValue(!booleanValue);
   };
 
   return (
-    <div className="w-full flex flex-wrap justify-center gap-4">
+    <div className="w-full flex flex-wrap justify-center gap-8">
       {Object.keys(Ai).map((iconName) => {
         const Icon = Ai[iconName];
         return (
           <div
             key={iconName}
             ref={iconRefs[iconName]}
-            onClick={() => handleIconClick(iconName)}
+            onClick={() => {
+              handleIconClick(iconName);
+              handleCloseModal();
+            }}
             onMouseMove={(e) => handleMouseMove(e, iconName)}
             onFocus={() => handleFocus(iconName)}
             onBlur={() => handleBlur(iconName)}
             onMouseEnter={() => handleMouseEnter(iconName)}
             onMouseLeave={() => handleMouseLeave(iconName)}
-            className=" cursor-pointer relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-xl border-2 hover:border-blue-900  border-zinc-900  bg-gradient-to-r from-black to-[#05011e] shadow-2xl"
+            className=" cursor-pointer relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-lg border hover:border-blue-900  border-zinc-900  bg-gradient-to-r from-black to-[#05011e] shadow-2xl"
           >
             <div
               className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
@@ -101,9 +104,6 @@ const CardIcons = () => {
           </div>
         );
       })}
-      {selectedIcon && (
-        <StyleIconsModal icon={selectedIcon} onClose={handleCloseModal} />
-      )}
     </div>
   );
 };

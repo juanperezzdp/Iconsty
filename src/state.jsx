@@ -1,12 +1,10 @@
 import { create } from "zustand";
 
 const useIconStore = create((set) => ({
+  booleanValue: false,
   selectedIcon: null,
-  isModalOpen: false,
-
   setSelectedIcon: (icon) => set({ selectedIcon: icon }),
-  openModal: () => set({ isModalOpen: true }),
-  closeModal: () => set({ isModalOpen: false }),
+  setBooleanValue: (value) => set({ booleanValue: value }),
 }));
 
 export default useIconStore;

@@ -53,3 +53,23 @@ body{
     }
   }
   
+
+  .style-input-color{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 2rem;
+  }
+
+  .style-input-color::-webkit-color-swatch {
+    border-radius: 5px;
+    border: solid 1px #FFFF;
+  }
+  .style-input-color::-moz-color-swatch {
+    border-radius: 15px;
+    border: none;
+  }
+  

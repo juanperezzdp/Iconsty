@@ -1,15 +1,17 @@
 import CardIcons from "./components/CardIcons";
 import Heard from "./components/Heard";
+import Nav from "./components/Nav";
 import StyleIconsModal from "./components/StyleIconsModal";
 import useIconStore from "./state";
 
 function App() {
-  const isModalOpen = useIconStore((state) => state.isModalOpen);
+  const { booleanValue } = useIconStore();
 
   return (
     <>
-      {isModalOpen === true ? <StyleIconsModal /> : null}
+      {booleanValue && <StyleIconsModal />}
       <Heard />
+      <Nav />
       <CardIcons />
     </>
   );

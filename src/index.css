@@ -41,7 +41,7 @@ body{
   }
 
   .animate-background-shine {
-    animation: background-shine 3s linear infinite;
+    animation: background-shine 7s linear infinite;
   }
 
   @keyframes background-shine {

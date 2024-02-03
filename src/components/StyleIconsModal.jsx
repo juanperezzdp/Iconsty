@@ -1,16 +1,22 @@
 import { useRef, useState } from "react";
-import { CiCircleRemove } from "test-icons-react/ci";
+import { CiCircleRemove, CiStar } from "test-icons-react/ci";
 import useIconStore from "../state";
+import { useEffect } from "react";
 
 const StyleIconsModal = () => {
   const iconRef = useRef(null);
-  const paragraphRefImport = useRef(null);
-  const paragraphRefComponent = useRef(null);
   const icon = useIconStore((state) => state.selectedIcon);
   const { booleanValue, setBooleanValue } = useIconStore();
   const [color, setColor] = useState(null);
   const [background, setBackground] = useState(null);
   const [size, setSize] = useState(null);
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCopied(false);
+    }, 1000);
+  }, [copied]);
 
   const handleCopyToClipboard = () => {
     const svgElement = iconRef.current.querySelector("svg");
@@ -18,7 +24,7 @@ const StyleIconsModal = () => {
       const svgString = new XMLSerializer().serializeToString(svgElement);
 
       navigator.clipboard.writeText(svgString).then(() => {
-        alert(`Copy icon SVG`);
+        setCopied(`SVG`);
       });
     }
   };
@@ -27,30 +33,39 @@ const StyleIconsModal = () => {
     setBooleanValue(!booleanValue);
   };
 
-  const handleCopy = () => {
-    const range = document.createRange();
-    range.selectNode(paragraphRefImport.current);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
+  const handleImportCopy = () => {
+    const importIcon = `import { ${icon.name} } from "iconty/${icon.name.slice(
+      -2
+    )}"`;
 
+    const tempTextArea = document.createElement("textarea");
+    tempTextArea.value = importIcon;
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
     document.execCommand("copy");
-
-    window.getSelection().removeAllRanges();
-
-    alert("Copy import");
+    document.body.removeChild(tempTextArea);
+    setCopied("Import");
   };
 
   const handleCopyComponent = () => {
-    const rangee = document.createRange();
-    rangee.selectNode(paragraphRefComponent.current);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(rangee);
+    const component = `<${icon.name} ${
+      size !== null || background !== null || color != null
+        ? ` className="`
+        : ""
+    } ${size === null ? "" : `w-[${size.trim()}px]`} ${
+      background === null ? "" : `bg-[${background.trim()}]`
+    } ${color === null ? "" : `text-[${color.trim()}]`} ${
+      size !== null || background !== null || color != null ? `"` : ""
+    }/>`;
 
+    const tempTextArea = document.createElement("textarea");
+    tempTextArea.value = component;
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
     document.execCommand("copy");
+    document.body.removeChild(tempTextArea);
 
-    window.getSelection().removeAllRanges();
-
-    alert("Copy Component");
+    setCopied("Component");
   };
 
   return (
@@ -63,27 +78,34 @@ const StyleIconsModal = () => {
               className="text-red-800 text-3xl hover:text-red-600 cursor-pointer"
             />
           </div>
-          <div
-            className="flex flex-col justify-center items-center gap-8"
-            ref={iconRef}
-          >
+          <div className="flex flex-col justify-center items-center gap-8">
             <div className="flex justify-center items-center">
-              <p className="text-sm" ref={paragraphRefImport}>
+              <p className="text-sm">
                 <span className="text-cyan-600">import</span>
                 <span className="text-yellow-400">{` {`}</span>
                 <span>{` ${icon.name} `}</span>
                 <span className="text-yellow-400">{`} `}</span>
                 <span className="text-cyan-600">from</span>
-                <span className="text-lime-700">{` "test-icons/ci";`}</span>
+                <span className="text-lime-700">{` "iconty/${icon.name.slice(
+                  -2
+                )}";`}</span>
               </p>
               <button
-                onClick={handleCopy}
-                className="hover:bg-white hover:border-white hover:text-black ml-2 bg-blue-700  text-xs py-1 px-4 rounded-md"
+                onClick={() => {
+                  setCopied("Import"), handleImportCopy;
+                }}
+                className={`${
+                  copied === "Import" &&
+                  "hover:bg-green-800 hover:text-white bg-green-800 text-white"
+                } w-20 hover:bg-white hover:border-white hover:text-black ml-2 bg-blue-700  text-xs py-1 px-4 rounded-md`}
               >
-                Copy
+                {copied === "Import" ? "Copied" : "Copy"}
               </button>
             </div>
-            <div className="h-40 flex flex-col justify-center items-center">
+            <div
+              ref={iconRef}
+              className="h-40 flex flex-col justify-center items-center"
+            >
               {icon && (
                 <div
                   className="rounded-lg"
@@ -99,14 +121,11 @@ const StyleIconsModal = () => {
               <p className="text-3xl">{icon.name}</p>
             </div>
 
-            <div className="flex">
-              <p
-                ref={paragraphRefComponent}
-                className="text-sm flex justify-center items-center "
-              >
+            <div className="flex justify-center items-center">
+              <p className="text-sm flex justify-center items-center ">
                 <span className="text-cyan-600 text-xl">{`<`}</span>
-                <span>{` ${icon.name} `}</span>
-                <span className="text-teal-400">{`${
+                <span>{` ${icon.name}`}</span>
+                <span className="text-violet-500">{`${
                   size !== null || background !== null || color != null
                     ? ` className="`
                     : ""
@@ -120,10 +139,15 @@ const StyleIconsModal = () => {
                 <span className="text-cyan-600 text-xl">{`/>`}</span>
               </p>
               <button
-                onClick={handleCopyComponent}
-                className="hover:bg-white hover:border-white hover:text-black ml-2 bg-blue-700  text-xs  px-4 rounded-md"
+                onClick={() => {
+                  setCopied("Component"), handleCopyComponent;
+                }}
+                className={`${
+                  copied === "Component" &&
+                  "hover:bg-green-800 hover:text-white bg-green-800 text-white"
+                } w-20  hover:bg-white hover:border-white hover:text-black ml-2 bg-blue-700  text-xs py-1 px-4 rounded-md`}
               >
-                Copy
+                {copied === "Component" ? "Copied" : "Copy"}
               </button>
             </div>
           </div>
@@ -195,10 +219,15 @@ const StyleIconsModal = () => {
             </div>
           </form>
           <button
-            className="mt-4 hover:bg-white hover:border-white hover:text-black border-[1px] border-blue-700 w-full p-1 bg-blue-700 rounded-lg "
-            onClick={handleCopyToClipboard}
+            className={`${
+              copied === "SVG" &&
+              "hover:bg-green-800 hover:text-white bg-green-800 text-white "
+            } mt-8 hover:bg-white  hover:text-black w-full p-1 bg-blue-700 rounded-lg `}
+            onClick={() => {
+              setCopied("SVG"), handleCopyToClipboard;
+            }}
           >
-            Copy SVG
+            {copied === "SVG" ? "Copied SVG" : "Copy SVG"}
           </button>
         </div>
       </div>

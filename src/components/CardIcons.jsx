@@ -1,13 +1,12 @@
 import { useRef, useState } from "react";
-import Ai from "../Import/Ai";
-import useIconStore from "../state";
+import useGobalStore from "../state";
 
-const CardIcons = () => {
-  const getSelectedIcon = useIconStore((state) => state.setSelectedIcon);
-  const { booleanValue, setBooleanValue } = useIconStore();
+const CardIcons = ({ props }) => {
+  const getSelectedIcon = useGobalStore((state) => state.setSelectedIcon);
+  const { booleanValue, setBooleanValue } = useGobalStore();
 
   const [iconStates, setIconStates] = useState(
-    Object.keys(Ai).reduce((acc, iconName) => {
+    Object.keys(props).reduce((acc, iconName) => {
       acc[iconName] = {
         isFocused: false,
         position: { x: 0, y: 0 },
@@ -17,7 +16,7 @@ const CardIcons = () => {
     }, {})
   );
 
-  const iconRefs = Object.keys(Ai).reduce((acc, iconName) => {
+  const iconRefs = Object.keys(props).reduce((acc, iconName) => {
     acc[iconName] = useRef(null);
     return acc;
   }, {});
@@ -64,7 +63,7 @@ const CardIcons = () => {
   };
 
   const handleIconClick = (iconName) => {
-    getSelectedIcon(Ai[iconName]);
+    getSelectedIcon(props[iconName]);
   };
 
   const handleCloseModal = () => {
@@ -73,8 +72,8 @@ const CardIcons = () => {
 
   return (
     <div className="w-full flex flex-wrap justify-center gap-8">
-      {Object.keys(Ai).map((iconName) => {
-        const Icon = Ai[iconName];
+      {Object.keys(props).map((iconName) => {
+        const Icon = props[iconName];
         return (
           <div
             key={iconName}

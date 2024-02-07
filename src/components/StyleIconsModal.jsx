@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { CiCircleRemove, CiStar } from "test-icons-react/ci";
 import useIconStore from "../state";
 import { useEffect } from "react";
 
@@ -69,14 +68,16 @@ const StyleIconsModal = () => {
   };
 
   return (
-    <div className="animate-modal-up backdrop-blur-sm fixed z-20 w-full h-[100vh] flex justify-center items-center">
+    <div className="animate-modal-up backdrop-blur-sm fixed z-30 w-full h-[100vh] flex justify-center items-center">
       <div className=" border-[1px] border-blue-700 bg-zinc-950 rounded-xl w-[60rem] h-[30rem] flex justify-around items-center relative">
         <div className="w-[36rem] flex flex-col justify-center items-center">
           <div className="absolute top-4 right-4">
-            <CiCircleRemove
+            <div
               onClick={() => handleClose()}
               className="text-red-800 text-3xl hover:text-red-600 cursor-pointer"
-            />
+            >
+              x
+            </div>
           </div>
           <div className="flex flex-col justify-center items-center gap-8">
             <div className="flex justify-center items-center">
@@ -92,12 +93,9 @@ const StyleIconsModal = () => {
               </p>
               <button
                 onClick={() => {
-                  setCopied("Import"), handleImportCopy;
+                  setCopied("Import"), handleImportCopy();
                 }}
-                className={`${
-                  copied === "Import" &&
-                  "hover:bg-green-800 hover:text-white bg-green-800 text-white"
-                } w-20 hover:bg-white hover:border-white hover:text-black ml-2 bg-blue-700  text-xs py-1 px-4 rounded-md`}
+                className={` w-20 hover:bg-white hover:border-white hover:text-black ml-2 bg-blue-700  text-xs py-1 px-4 rounded-md`}
               >
                 {copied === "Import" ? "Copied" : "Copy"}
               </button>
@@ -140,12 +138,9 @@ const StyleIconsModal = () => {
               </p>
               <button
                 onClick={() => {
-                  setCopied("Component"), handleCopyComponent;
+                  setCopied("Component"), handleCopyComponent();
                 }}
-                className={`${
-                  copied === "Component" &&
-                  "hover:bg-green-800 hover:text-white bg-green-800 text-white"
-                } w-20  hover:bg-white hover:border-white hover:text-black ml-2 bg-blue-700  text-xs py-1 px-4 rounded-md`}
+                className={`w-20  hover:bg-white hover:border-white hover:text-black ml-2 bg-blue-700  text-xs py-1 px-4 rounded-md`}
               >
                 {copied === "Component" ? "Copied" : "Copy"}
               </button>
@@ -219,12 +214,9 @@ const StyleIconsModal = () => {
             </div>
           </form>
           <button
-            className={`${
-              copied === "SVG" &&
-              "hover:bg-green-800 hover:text-white bg-green-800 text-white "
-            } mt-8 hover:bg-white  hover:text-black w-full p-1 bg-blue-700 rounded-lg `}
+            className={`mt-8 hover:bg-white  hover:text-black w-full p-1 bg-blue-700 rounded-lg `}
             onClick={() => {
-              setCopied("SVG"), handleCopyToClipboard;
+              setCopied("SVG"), handleCopyToClipboard();
             }}
           >
             {copied === "SVG" ? "Copied SVG" : "Copy SVG"}

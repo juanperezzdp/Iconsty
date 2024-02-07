@@ -4,21 +4,19 @@ import Nav from "./components/Nav";
 import StyleIconsModal from "./components/StyleIconsModal";
 import useGobalStore from "./state";
 import Br from "./Import/Br";
-import Ai from "./Import/Ai";
+import In from "./Import/In";
 
 function App() {
   const { navValue, booleanValue } = useGobalStore();
-
-  console.log(navValue);
 
   return (
     <>
       {booleanValue && <StyleIconsModal />}
       <Heard />
       <Nav />
-      {navValue === null && <CardIcons props={Br} />}
+      {navValue === null && <CardIcons props={In} />}
       {navValue === "brands" && <CardIcons props={Br} />}
-      {navValue === "ci" && <CardIcons props={Ai} />}
+      {navValue === "interface" && <CardIcons props={In} />}
     </>
   );
 }

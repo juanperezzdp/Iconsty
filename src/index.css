@@ -10,6 +10,160 @@ body{
 }
 
 
+
+
+.rain-container {
+  position: absolute;
+  width: 100%;
+  height: 80vh;
+
+  overflow: hidden;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 10%, rgb(0, 0, 0));
+}
+
+.rain {
+  position: absolute;
+  border-radius: 50%;
+  z-index: -2;
+  opacity: 1;
+  animation: raining 4s linear infinite both;
+
+}
+
+.rain:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 1;
+  animation: fadeOut 2s linear 2s infinite both;
+  
+}
+
+.drop {
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  border-radius: 50%;
+  opacity: 1;
+  z-index: -1;
+}
+
+.rain1 {
+  left: 5rem;
+  top: 2rem;
+  animation: raining 12s linear infinite both;
+}
+
+.rain2 {
+  left: 35%;
+  top: 10rem;
+  animation: raining 7s linear infinite both;
+}
+
+.drop2 {
+  top: 12rem;
+  left: 23%;
+  animation: raining 12s linear infinite both -6s;
+}
+
+.rain3 {
+  left: 10rem;
+  top: 35rem;
+  animation: raining 6s linear infinite both;
+}
+
+.rain4 {
+  right: 23rem;
+  top: 6rem;
+  animation: raining 15s linear infinite both;
+}
+
+.rain5 {
+  left: 25rem;
+  top: 47rem;
+  animation: raining 15s linear infinite both -7s;
+}
+
+.drop5 {
+  top: -1rem;
+  left: 5rem;
+  animation: raining 10s linear infinite both;
+}
+
+.rain6 {
+  right: 10rem;
+  top: 34rem;
+  animation: raining 13s linear infinite both;
+}
+
+.rain7 {
+  left: 34rem;
+  top: 10rem;
+  animation: raining 8s linear infinite both -4s;
+}
+
+.rain8 {
+  right: 25rem;
+  top: 40rem;
+  animation: raining 12s linear infinite both;
+}
+
+.drop8 {
+  top: -7rem;
+  left: 20%;
+  animation: raining 10s linear infinite both -6s;
+}
+
+.rain9 {
+  right: 5rem;
+  top: 15.5rem;
+  animation: raining 12s linear infinite both;
+}
+
+.rain10 {
+  left: 24rem;
+  top: -4rem;
+  animation: raining 8s linear infinite both -4s;
+}
+
+.drop11 {
+  right: 17rem;
+  top: 20rem;
+  animation: raining 12s linear infinite both;
+}
+
+.drop12 {
+  right: 15rem;
+  top: 50rem;
+  animation: raining 15s linear infinite both -7s;
+}
+
+@keyframes raining {
+  from {
+    transform: translateY(-1200px);
+  }
+  to {
+    transform: translateY(869px);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
+
+
+
+
+
 .animate-slide-up {
     animation: slideUp 2.0s ease-out;
   }

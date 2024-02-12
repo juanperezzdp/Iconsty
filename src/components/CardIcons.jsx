@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import useGlobalStore from "../state";
-import { Frownin } from "test-icons-react/in";
+import { Frownin } from "iconsty/in";
 
 const CardIcons = ({ props }) => {
   const getSelectedIcon = useGlobalStore((state) => state.setSelectedIcon);
@@ -8,45 +8,7 @@ const CardIcons = ({ props }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [visibleIconsCount, setVisibleIconsCount] = useState(32);
 
-  const [iconStates, setIconStates] = useState(
-    Object.keys(props).reduce((acc, iconName) => {
-      acc[iconName] = {
-        isFocused: false,
-        position: { x: 0, y: 0 },
-        opacity: 0,
-      };
-      return acc;
-    }, {})
-  );
-
   const iconRefs = useRef({});
-
-  const handleMouseMove = (e, iconName) => {
-    if (!iconRefs.current[iconName] || iconStates[iconName].isFocused) return;
-
-    const div = iconRefs.current[iconName];
-    const rect = div.getBoundingClientRect();
-
-    const position = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-    setIconStates((prevStates) => ({
-      ...prevStates,
-      [iconName]: { ...prevStates[iconName], position },
-    }));
-  };
-
-  const handleMouseEnter = (iconName) => {
-    setIconStates((prevStates) => ({
-      ...prevStates,
-      [iconName]: { ...prevStates[iconName], opacity: 1 },
-    }));
-  };
-
-  const handleMouseLeave = (iconName) => {
-    setIconStates((prevStates) => ({
-      ...prevStates,
-      [iconName]: { ...prevStates[iconName], opacity: 0 },
-    }));
-  };
 
   const handleIconClick = (iconName) => {
     getSelectedIcon(props[iconName]);
@@ -73,15 +35,7 @@ const CardIcons = ({ props }) => {
   };
 
   return (
-    <div
-      id="card"
-      className="w-full flex flex-wrap justify-center gap-8"
-      onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget)) {
-          handleCloseModal();
-        }
-      }}
-    >
+    <div id="card" className="w-full flex flex-wrap justify-center gap-8">
       <input
         type="text"
         placeholder="search icons..."
@@ -104,22 +58,12 @@ const CardIcons = ({ props }) => {
           return (
             <div
               key={iconName}
-              ref={(el) => (iconRefs.current[iconName] = el)}
-              onClick={() => handleIconClick(iconName)} // Mover el evento de clic aquí
-              onMouseMove={(e) => handleMouseMove(e, iconName)}
-              onMouseEnter={() => handleMouseEnter(iconName)}
-              onMouseLeave={() => handleMouseLeave(iconName)}
+              ref={(e) => (iconRefs.current[iconName] = e)}
               className=" z-10 cursor-pointer relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-lg border hover:border-blue-900 border-zinc-900 bg-gradient-to-r from-black to-[#05011e] shadow-2xl"
-              tabIndex={0}
+              onClick={() => handleIconClick(iconName)}
             >
-              <div
-                className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
-                style={{
-                  opacity: iconStates[iconName].opacity,
-                  background: `radial-gradient(150px circle at ${iconStates[iconName].position.x}px ${iconStates[iconName].position.y}px, rgba(35, 35, 236,0.3), transparent 40%)`,
-                }}
-              />
-              <div className="z-10 flex flex-col justify-center items-center gap-3">
+              <div className="pointer-events-none absolute -inset-px opacity-0 transition duration-300" />
+              <div className="flex flex-col justify-center items-center gap-3">
                 <Icon className="text-white text-4xl" />
                 <p className="text-xs text-slate-200">{iconName}</p>
               </div>
@@ -132,7 +76,7 @@ const CardIcons = ({ props }) => {
         <div className="w-full h-20 flex justify-center items-center">
           <button
             onClick={loadMoreIcons}
-            className="mt-4 bg-blue-500 hover:bg-white hover:text-black text-white rounded-lg px-10 py-1"
+            className="mt-4 bg-blue-700 hover:bg-blue-600 text-white rounded-lg px-10 py-1"
           >
             See more
           </button>

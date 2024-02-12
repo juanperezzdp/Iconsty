@@ -11,6 +11,25 @@ body{
 
 
 
+::-webkit-scrollbar {
+  width: 0.7rem; 
+}
+
+::-webkit-scrollbar-track {
+  background: #151515; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1d4cd3;
+  border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0228be; 
+}
+
+
+
 
 .rain-container {
   position: absolute;
@@ -93,7 +112,7 @@ body{
 }
 
 .rain6 {
-  right: 10rem;
+  right: 30%;
   top: 34rem;
   animation: raining 13s linear infinite both;
 }

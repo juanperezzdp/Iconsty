@@ -10,9 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "iconsty": "^0.0.1",
+    "iconsty-animation": "^0.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "test-icons-react": "^1.0.40",
     "zustand": "^4.5.0"
   },
   "devDependencies": {

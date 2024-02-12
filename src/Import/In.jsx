@@ -166,7 +166,7 @@ import {
   Brainin,
   BriefcaseAltin,
   BriefcaseAltOnein,
-} from "test-icons-react/in";
+} from "iconsty/in";
 
 const In = {
   AlarmOffin,

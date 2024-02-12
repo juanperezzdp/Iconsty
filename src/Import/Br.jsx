@@ -24,7 +24,7 @@ import {
   Squarespacebr,
   Androidbr,
   Shopifybr,
-} from "test-icons-react/br";
+} from "iconsty/br";
 
 const Ai = {
   Facebookbr,
